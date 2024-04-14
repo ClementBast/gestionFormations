@@ -1,0 +1,2 @@
+Compte utilisateur : jdoe / mdp: jdoi
+Compte admin :test / mdp : test
