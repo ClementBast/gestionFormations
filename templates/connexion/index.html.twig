@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Connexion</h2>
+                </div>
+                <div class="card-body">
+                    {% if app.session.flashBag.has('error') %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for flashMessage in app.session.flashBag.get('error') %}
+                        {{ flashMessage }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_label(form.login, 'Nom d\'utilisateur', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.login, {'attr': {'class': 'form-control', 'placeholder': 'Nom d\'utilisateur'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.mdp, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

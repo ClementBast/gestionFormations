@@ -1,0 +1,155 @@
+<!-- demandesFormation.html.twig -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demandes de formation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .actions a {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+         .table a {
+            display: inline-block;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+
+        .table a:hover {
+            text-decoration: underline;
+        }
+
+        .table .btn-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .table .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .table .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .table .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .container a.home {
+            margin-top: 20px;
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .container a.home:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Demandes de formation</h2>
+        <div class="actions">
+            <a href="{{ path('app_form', {}) }}" class="home">Accueil</a>
+        </div>
+    </div>
+
+    {% if demandesFormation is empty %}
+        <p>Aucune demande de formation pour le moment.</p>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Produit</th>
+                    <th>Département</th>
+                    <th>Nombre d'heures</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for demandeFormation in demandesFormation %}
+                    {% if demandeFormation.statut == 'En attente' %}
+                        <tr>
+                            <td>{{ demandeFormation.employe.nom }}</td>
+                            <td>{{ demandeFormation.employe.prenom }}</td>
+                            <td>{{ demandeFormation.formation.produit.libelle }}</td>
+                            <td>{{ demandeFormation.formation.departement }}</td>
+                            <td>{{ demandeFormation.formation.nbrHeure }}</td>
+                            <td>{{ demandeFormation.statut }}</td>
+                            <td>
+                                <form method="post" action="{{ path('accepter_demande', {'id': demandeFormation.id}) }}" style="display: inline;">
+                                    <button type="submit" class="btn btn-success">Accepter</button>
+                                </form>
+                                <form method="post" action="{{ path('refuser_demande', {'id': demandeFormation.id}) }}" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger">Refuser</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7"><hr></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>

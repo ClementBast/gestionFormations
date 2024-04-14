@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Formations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .formations {
+            margin-top: 20px;
+        }
+
+        .formation {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .formation strong {
+            color: #007bff;
+        }
+
+        .formation p {
+            margin: 0;
+        }
+
+        .formation-header {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .formation-list {
+            padding: 10px;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des Formations</h1>
+    <div class="formations">
+        <div class="formation">
+            <div class="formation-header">
+                <h2>Formations En attente</h2>
+            </div>
+            <div class="formation-list">
+                {% for item in formations %}
+                    {% if item.statut == 'En attente' %}
+                        <p>
+                            <strong>Produit :</strong> {{ item.formation.produit.libelle|default('N/A') }}<br>
+                            <strong>Date début :</strong> {{ item.formation.dateDebut|date('Y-m-d')|default('N/A') }}<br>
+                            <strong>Durée :</strong> {{ item.formation.nbrHeure ~ ' heures' |default('N/A') }}<br>
+                            <strong>Département :</strong> {{ item.formation.departement|default('N/A') }}<br>
+                            <strong>Statut :</strong> {{ item.statut|default('N/A') }}<br>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="formation">
+            <div class="formation-header">
+                <h2>Formations Acceptées</h2>
+            </div>
+            <div class="formation-list">
+                {% for item in formations %}
+                    {% if item.statut == 'Acceptée' %}
+                        <p>
+                            <strong>Produit :</strong> {{ item.formation.produit.libelle|default('N/A') }}<br>
+                            <strong>Date début :</strong> {{ item.formation.dateDebut|date('Y-m-d')|default('N/A') }}<br>
+                            <strong>Durée :</strong> {{ item.formation.nbrHeure ~ ' heures' |default('N/A') }}<br>
+                            <strong>Département :</strong> {{ item.formation.departement|default('N/A') }}<br>
+                            <strong>Statut :</strong> {{ item.statut|default('N/A') }}<br>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="formation">
+            <div class="formation-header">
+                <h2>Formations Terminées</h2>
+            </div>
+            <div class="formation-list">
+                {% for item in formations %}
+                    {% if item.statut == 'Terminée' %}
+                        <p>
+                            <strong>Produit :</strong> {{ item.formation.produit.libelle|default('N/A') }}<br>
+                            <strong>Date début :</strong> {{ item.formation.dateDebut|date('Y-m-d')|default('N/A') }}<br>
+                            <strong>Durée :</strong> {{ item.formation.nbrHeure ~ ' heures' |default('N/A') }}<br>
+                            <strong>Département :</strong> {{ item.formation.departement|default('N/A') }}<br>
+                            <strong>Statut :</strong> {{ item.statut|default('N/A') }}<br>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <a href="{{ path('app_formEmpl') }}" class="btn">Retour à l'accueil</a>
+</body>
+</html>
+

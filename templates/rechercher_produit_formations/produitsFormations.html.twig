@@ -1,0 +1,37 @@
+{# templates/produit_formations/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher des formations par produit{% endblock %}
+
+{% block body %}
+    <h1>Rechercher des formations par produit</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.libelle) }}
+
+    <button type="submit">Rechercher</button>
+
+    {{ form_end(form) }}
+
+    {% if inscriptions is defined %}
+        <h2>Résultats de la recherche</h2>
+
+        {% if inscriptions is empty %}
+            <p>Aucune inscription trouvée pour le produit spécifié.</p>
+        {% else %}
+            <ul>
+                {% for inscription in inscriptions %}
+                    <li>
+                        {{ inscription.id }} - 
+                        Produit: {{ inscription.formation.produit.libelle }} - 
+                        Département: {{ inscription.formation.departement }} - 
+                        Statut: {{ inscription.statut }} - 
+                        Nom: {{ inscription.employe.nom }} - 
+                        Prénom: {{ inscription.employe.prenom }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+{% endblock %}

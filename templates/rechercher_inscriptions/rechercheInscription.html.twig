@@ -1,0 +1,34 @@
+{# templates/rechercher_inscriptions/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher des inscriptions{% endblock %}
+
+{% block body %}
+    <h1>Rechercher des inscriptions</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.prenom) }}
+
+    <button type="submit">Rechercher</button>
+
+    {{ form_end(form) }}
+
+    {% if inscriptions is defined %}
+        <h2>Résultats de la recherche des formations pour {{ inscriptions[0].employe.nom }} {{ inscriptions[0].employe.prenom }}</h2>
+
+        {% if inscriptions is empty %}
+            <p>Aucune inscription trouvée pour les critères spécifiés.</p>
+        {% else %}
+            <ul>
+                {% for inscription in inscriptions %}
+                    <li>
+                        Produit: {{ inscription.formation.produit.libelle }} - 
+                        Département: {{ inscription.formation.departement }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+{% endblock %}

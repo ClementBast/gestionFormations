@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Employés</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .employe {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .employe strong {
+            color: #007bff;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 7px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 20px; 
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .inscription {
+            margin-top: 10px;
+            padding-left: 20px;
+            border-left: 2px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Liste des Employés</h1>
+    </div>
+
+    <h2>Employés inscrits à au moins une formation :</h2>
+    {% for employe in employes %}
+        {% if employe.inscriptions is defined and employe.inscriptions|length > 0 %}
+            <div class="employe">
+                <p>
+                    Nom : <strong>{{ employe.nom }}</strong><br>
+                    Prénom : <strong>{{ employe.prenom }}</strong><br>
+                </p>
+                <div class="inscription">
+                    <h3>Inscriptions de {{ employe.nom }} {{ employe.prenom }}</h3>
+                    <ul>
+                        {% for inscription in employe.inscriptions %}
+                            <li>
+                                Produit: {{ inscription.formation.produit.libelle }} - 
+                                Département: {{ inscription.formation.departement }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        {% endif %}
+    {% endfor %}
+
+    <h2>Employés non inscrits à aucune formation :</h2>
+    {% for employe in employes %}
+        {% if employe.inscriptions is not defined or employe.inscriptions|length == 0 %}
+            <div class="employe">
+                <p>
+                    Nom : <strong>{{ employe.nom }}</strong><br>
+                    Prénom : <strong>{{ employe.prenom }}</strong><br>
+                </p>
+                <div class="inscription">
+                    <p>N'est inscrit(e) à aucune formation.</p>
+                </div>
+            </div>
+            <hr>
+        {% endif %}
+    {% endfor %}
+
+    <a href="{{ path('app_form') }}" class="button">Accueil</a>
+
+</body>
+</html>

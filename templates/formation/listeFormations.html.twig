@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Formations</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .actions a {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        .formation {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .formation strong {
+            color: #007bff;
+        }
+
+        .formation .action-buttons a {
+            color: #fff;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+
+        .formation .action-buttons a.edit {
+            background-color: #28a745;
+        }
+
+        .formation .action-buttons a.delete {
+            background-color: #dc3545;
+        }
+
+        .formation .action-buttons a.edit:hover {
+            background-color: #218838;
+        }
+
+        .formation .action-buttons a.delete:hover {
+            background-color: #c82333;
+        }
+
+        .show-inscriptions {
+            background-color: #ffc107;
+            color: #333;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 3px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Liste des Formations</h1>
+        <div class="actions">
+            <a href="{{ path('ajout', {}) }}">Ajouter une nouvelle formation</a>
+            <a href="{{ path('app_demandes', {}) }}">Gérer les demandes de formations</a>
+            <a href="{{ path('app_logout', {}) }}">Se déconnecter</a>
+            <a href="{{ path('app_rechercher_employe') }}">Liste Employés</a>
+        </div>
+    </div>
+
+    {% for formation in formations %}
+        <div class="formation">
+            <p>
+                Produit : {{ formation.produit.libelle|default('N/A') }}<br>
+                Date début : <strong>{{ formation.dateDebut|date('Y-m-d')|default('N/A') }}</strong><br>
+                Durée : <strong>{{ formation.nbrHeure ~ ' heures' |default('N/A') }}</strong><br>
+                Département : <strong>{{ formation.departement|default('N/A') }}</strong><br>
+                <div class="action-buttons">
+                    <a href="{{ path('modif', {'id': formation.id}) }}" class="edit">Modifier</a>
+                    <a href="{{ path('supprimer_formation', {'id': formation.id}) }}" class="delete">Supprimer</a>
+                </div>
+               <a href="{{ path('app_produit_formation_id', {'id': formation.id}) }}" class="show-inscriptions">Afficher Inscriptions</a>
+
+            </p>
+        </div>
+        <hr>
+    {% endfor %}
+
+</body>
+</html>

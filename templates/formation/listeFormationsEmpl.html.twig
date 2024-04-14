@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Formations</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .formations {
+            width: 70%;
+        }
+
+        .logout {
+            background-color: #dc3545;
+            color: #fff;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .view-inscriptions {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .alert {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .alert-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .alert-warning {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        .alert-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .formation {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .formation strong {
+            color: #007bff;
+        }
+
+        .inscription-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Liste des Formations</h1>
+        <div>
+            <a href="{{ path('mes_formations') }}" class="view-inscriptions">Voir mes inscriptions</a>
+            <a href="{{ path('app_logout') }}" class="logout">Déconnexion</a>
+        </div>
+    </div>
+
+    {% for flashMessage in app.flashes('success') %}
+        <div class="alert alert-success">
+            <strong>{{ flashMessage }}</strong>
+        </div>
+    {% endfor %}
+
+    {% for flashMessage in app.flashes('warning') %}
+        <div class="alert alert-warning">
+            <strong>{{ flashMessage }}</strong>
+        </div>
+    {% endfor %}
+
+    {% for flashMessage in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="formations">
+        <p>Vous êtes dans la liste des formations </p>
+        <p>Choisissez une formation :</p>
+
+        {% for formation in formations %}
+            <div class="formation">
+                <p>
+                    Produit : {{ formation.produit.libelle|default('N/A') }}<br>
+                    Date début : <strong>{{ formation.dateDebut|date('Y-m-d')|default('N/A') }}</strong><br>
+                    Durée : <strong>{{ formation.nbrHeure ~ ' heures' |default('N/A') }}</strong><br>
+                    Département : <strong>{{ formation.departement|default('N/A') }}</strong><br>
+                    
+                    
+                    <a href="{{ path('app_inscrire', {'id': formation.id}) }}" class="inscription-button">S'inscrire</a>
+                </p>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

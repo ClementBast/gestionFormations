@@ -1,0 +1,32 @@
+{# templates/rechercher_formations/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche de Formations{% endblock %}
+
+{% block body %}
+    <h1>Recherche de Formations</h1>
+
+    {# Formulaire de recherche #}
+    <form action="{{ path('app_search') }}" method="get">
+        <label for="nom">Nom :</label>
+        <input type="text" name="nom" id="nom" required>
+        
+        <label for="prenom">Prénom :</label>
+        <input type="text" name="prenom" id="prenom" required>
+
+        <button type="submit">Rechercher</button>
+    </form>
+
+    {# Affichage des résultats de la recherche #}
+    {% if demandesFormation is not empty %}
+        <h2>Résultats de la recherche</h2>
+        <ul>
+            {% for inscription in demandesFormation %}
+                <li>{{ inscription.employe.nom }} {{ inscription.employe.prenom }} - {{ inscription.formation.libelle }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun résultat trouvé.</p>
+    {% endif %}
+{% endblock %}

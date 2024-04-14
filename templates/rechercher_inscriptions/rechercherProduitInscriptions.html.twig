@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Inscriptions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .no-inscriptions {
+            font-style: italic;
+            color: #888;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Liste des Inscriptions pour la formation de {{ formation.produit.libelle }}</h1>
+    <a href="{{ path('app_form', {}) }}" class="button">Accueil</a>
+
+    {% if inscriptions %}
+        <ul>
+           {% for inscription in inscriptions %}
+                {% if inscription.statut == 'Acceptée' %}
+                    <li>
+                        <strong>Inscription ID:</strong> {{ inscription.id }}<br>
+                        <strong>Département:</strong> {{ inscription.formation.departement }}<br>
+                        <strong>Statut:</strong> {{ inscription.statut }}<br>
+                        <strong>Nom:</strong> {{ inscription.employe.nom }}<br>
+                        <strong>Prénom:</strong> {{ inscription.employe.prenom }}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-inscriptions">Aucune inscription trouvée pour le produit spécifié.</p>
+    {% endif %}
+
+</body>
+</html>
